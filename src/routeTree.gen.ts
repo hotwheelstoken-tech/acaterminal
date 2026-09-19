@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AgentRouteImport } from './routes/agent'
+import { Route as DocsRouteImport } from './routes/docs'
+import { Route as LoreRouteImport } from './routes/lore'
 import { Route as TerminalRouteImport } from './routes/terminal'
 import { Route as TokenRouteImport } from './routes/token'
 
@@ -22,6 +24,16 @@ const IndexRoute = IndexRouteImport.update({
 const AgentRoute = AgentRouteImport.update({
   id: '/agent',
   path: '/agent',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DocsRoute = DocsRouteImport.update({
+  id: '/docs',
+  path: '/docs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoreRoute = LoreRouteImport.update({
+  id: '/lore',
+  path: '/lore',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TerminalRoute = TerminalRouteImport.update({
@@ -38,12 +50,16 @@ const TokenRoute = TokenRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/agent': typeof AgentRoute
+  '/docs': typeof DocsRoute
+  '/lore': typeof LoreRoute
   '/terminal': typeof TerminalRoute
   '/token': typeof TokenRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/agent': typeof AgentRoute
+  '/docs': typeof DocsRoute
+  '/lore': typeof LoreRoute
   '/terminal': typeof TerminalRoute
   '/token': typeof TokenRoute
 }
@@ -51,20 +67,24 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/agent': typeof AgentRoute
+  '/docs': typeof DocsRoute
+  '/lore': typeof LoreRoute
   '/terminal': typeof TerminalRoute
   '/token': typeof TokenRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/agent' | '/terminal' | '/token'
+  fullPaths: '/' | '/agent' | '/docs' | '/lore' | '/terminal' | '/token'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/agent' | '/terminal' | '/token'
-  id: '__root__' | '/' | '/agent' | '/terminal' | '/token'
+  to: '/' | '/agent' | '/docs' | '/lore' | '/terminal' | '/token'
+  id: '__root__' | '/' | '/agent' | '/docs' | '/lore' | '/terminal' | '/token'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AgentRoute: typeof AgentRoute
+  DocsRoute: typeof DocsRoute
+  LoreRoute: typeof LoreRoute
   TerminalRoute: typeof TerminalRoute
   TokenRoute: typeof TokenRoute
 }
@@ -83,6 +103,20 @@ declare module '@tanstack/react-router' {
       path: '/agent'
       fullPath: '/agent'
       preLoaderRoute: typeof AgentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/docs': {
+      id: '/docs'
+      path: '/docs'
+      fullPath: '/docs'
+      preLoaderRoute: typeof DocsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lore': {
+      id: '/lore'
+      path: '/lore'
+      fullPath: '/lore'
+      preLoaderRoute: typeof LoreRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/terminal': {
@@ -105,6 +139,8 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AgentRoute: AgentRoute,
+  DocsRoute: DocsRoute,
+  LoreRoute: LoreRoute,
   TerminalRoute: TerminalRoute,
   TokenRoute: TokenRoute,
 }
