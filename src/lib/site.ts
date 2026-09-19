@@ -1,5 +1,5 @@
 export const BUY_URL = "https://argus.world";
-export const X_URL = "";
+export const X_URL = "https://x.com/ArcCodingAgent";
 
 export const navItems = [
   { label: "Home", to: "/" },
