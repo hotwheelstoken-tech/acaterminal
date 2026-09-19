@@ -1,24 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { motion } from "motion/react";
+import { ArrowDown, ExternalLink } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { BootScreen } from "@/components/boot-screen";
+import { AboutSection, AgentSection, ArcSection, BuildSection, FAQSection, FinalCTA, HowItWorks, RoadmapSection } from "@/components/home-sections";
+import { BUY_URL } from "@/lib/site";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head:()=>({meta:[{title:"ARC CODING AGENT — From Prompt to Onchain"},{name:"description",content:"ARC CODING AGENT is an independent community project inspired by the Onchain Coding Agent concept — turning human intent into code, contracts, applications, and onchain execution."},{property:"og:title",content:"ARC CODING AGENT — FROM PROMPT TO ONCHAIN"},{property:"og:description",content:"Ideas → Prompt → Code → Deploy → Onchain"},{property:"og:type",content:"website"},{property:"og:image",content:"https://id-preview--b12baeca-d8f7-4d21-a1a0-4172a761d92a.lovable.app/share/aca-og.jpg"},{name:"twitter:card",content:"summary_large_image"},{name:"twitter:image",content:"https://id-preview--b12baeca-d8f7-4d21-a1a0-4172a761d92a.lovable.app/share/aca-og.jpg"}],links:[{rel:"canonical",href:"/"}]}),
+  component: Home,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
+function Home(){return <><BootScreen/><Hero/><AboutSection/><AgentSection/><HowItWorks/><BuildSection/><ArcSection/><RoadmapSection/><FAQSection/><FinalCTA/></>}
+
+function Hero(){const boot=["SYSTEM INITIALIZATION...","[✓] AGENT ONLINE","[✓] INTENT ENGINE","[✓] CODE ENGINE","[✓] CONTRACT ENGINE","[✓] ONCHAIN ENGINE","NETWORK: ARC","STATUS: READY"];return <section className="relative min-h-[960px] overflow-hidden border-b border-border pt-18 lg:min-h-[850px]"><img src="/assets/aca-banner.jpeg" alt="ACA anime agent in a futuristic onchain command center" fetchPriority="high" className="absolute inset-0 size-full object-cover object-[22%_center] opacity-55 lg:object-center"/><div className="absolute inset-0 bg-[linear-gradient(90deg,var(--background)_0%,color-mix(in_oklab,var(--background)_78%,transparent)_36%,color-mix(in_oklab,var(--background)_30%,transparent)_64%,var(--background)_100%)]"/><div className="absolute inset-0 bg-[linear-gradient(0deg,var(--background)_0%,transparent_42%)]"/><div className="relative mx-auto grid min-h-[850px] max-w-7xl items-center gap-10 px-4 py-20 sm:px-6 lg:grid-cols-[1fr_1.05fr_.8fr]"><div className="z-10"><p className="font-mono text-xs uppercase text-primary-bright">ACA://CORE · AGENT ONLINE</p><h1 className="mt-5 font-display text-6xl font-bold uppercase leading-[.82] text-glow sm:text-8xl lg:text-7xl xl:text-8xl"><span className="block text-2xl text-ice sm:text-3xl">Arc Coding Agent</span>From prompt<br/>to onchain.</h1><p className="mt-7 max-w-md leading-7 text-ice">An AI-native coding agent concept for the onchain era.</p><p className="mt-3 max-w-md text-sm leading-6 text-muted-foreground">Turn ideas into code. Turn code into contracts. Turn contracts into execution.</p><div className="mt-8 flex flex-col gap-3 sm:flex-row"><Button asChild><a href={BUY_URL} target="_blank" rel="noopener noreferrer">Buy $ACA <ExternalLink/></a></Button><Button asChild variant="outline"><a href={BUY_URL} target="_blank" rel="noopener noreferrer">View chart</a></Button></div><Button asChild variant="ghost" className="mt-3"><a href="/terminal">Enter terminal <ArrowDown/></a></Button></div><div className="min-h-48 lg:min-h-0"/><motion.div initial={{opacity:0,x:30}} animate={{opacity:1,x:0}} className="hud-panel z-10 self-end p-5 font-mono text-[10px] leading-6 lg:self-center">{boot.map((line,i)=><motion.p key={line} initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.25+i*.1}} className={line.includes("✓")||line.includes("READY")?"text-primary-bright":"text-muted-foreground"}>{line}</motion.p>)}<div className="my-4 h-px bg-border"/><p className="text-ice">&gt; Build an autonomous payment application.</p><motion.p animate={{opacity:[.4,1,.4]}} transition={{repeat:Infinity,duration:1.6}} className="mt-3 text-primary-bright">STATUS: READY FOR ONCHAIN EXECUTION</motion.p><div className="mt-5 grid grid-cols-2 gap-2">{[["AGENT STATUS","ONLINE"],["MODE","AUTONOMOUS"],["ENGINE","ACA-CORE"],["PROCESS","PROMPT → CODE"]].map(([a,b])=><div key={a} className="border border-border p-2"><span className="block text-muted-foreground">{a}</span><strong className="text-ice">{b}</strong></div>)}</div></motion.div></div><div className="absolute bottom-5 left-1/2 -translate-x-1/2 font-mono text-[9px] uppercase text-muted-foreground">Contract · Coming soon</div></section>}
